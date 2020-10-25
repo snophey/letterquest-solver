@@ -35,7 +35,7 @@ for word in word_list:
     letters_in_word = process_word(word)
     if not letters_in_word:
         continue
-    if is_subset(available_letters, preprocess_word(word)):
+    if is_subset(available_letters, process_word(word)):
         longest_match = word
         result.append(word)
         if (len(word) == 15):
