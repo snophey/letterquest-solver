@@ -35,11 +35,11 @@ for word in word_list:
     letters_in_word = process_word(word)
     if not letters_in_word:
         continue
-    if is_subset(available_letters, process_word(word)):
+    if is_subset(available_letters, letters_in_word):
         longest_match = word
         result.append(word)
         if (len(word) == 15):
-            sys.exit(0) # early exit because its not possible to find a longer match
+            break # early exit because its not possible to find a longer match
 
 result.sort(key=lambda x: len(x))
 for word in result:
