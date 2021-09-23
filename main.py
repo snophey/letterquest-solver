@@ -36,7 +36,7 @@ def longest_words_for_given_letters(available_letters : list):
             continue
         if is_subset(available_letters, letters_in_word):
             index = len(word)-1
-            result[index] = comparator.compare(result[index], word)
+            result[index] = comparator.better_word(result[index], word)
 
     result.reverse()
     return result

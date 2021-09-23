@@ -14,12 +14,15 @@ class WordComparator:
         print("Initializing word comparator...")
         start_time = time.time()
         self.word_counter = self.word_frequencies()
+        self.stemmer = PorterStemmer()
         print("Done. Initialization took {} seconds.".format(time.time() - start_time))
     
-    def compare(self, word1 : str, word2 : str):
+    def better_word(self, word1 : str, word2 : str):
         if word1 == None or word2 == None:
             return word1 if word2 == None else word2
-        return word1 if self.word_counter[word1] > self.word_counter[word2]  else word2
+        w1_norm = self.normalize_word(word1)
+        w2_norm = self.normalize_word(word2)
+        return word1 if self.word_counter[w1_norm] > self.word_counter[w2_norm]  else word2
     
     def word_frequencies(self):
         if exists(WordComparator.COUNTER_FILE_NAME):
@@ -38,8 +41,10 @@ class WordComparator:
         return counter
     
     def normalize_words(self, words : list):
-        stemmer = PorterStemmer()
-        return [stemmer.stem(word.lower()) for word in words]
+        return [self.normalize_word(word) for word in words]
+    
+    def normalize_word(self, word):
+        return self.stemmer.stem(word.lower())
     
     def serialize_counts(self):
         self.word_counter
