@@ -25,11 +25,15 @@ def is_subset(superset, subset):
             return False
     return True
 
+def more_common_word(word1 : str, word2 : str):
+    if word1 == None or word2 == None:
+        return word1 if word2 == None else word2
+    # TODO actual word frequency comparison
+    return max(word1, word2)
 
 def longest_words_for_given_letters(available_letters : list):
-    result = []
+    result = [None for i in range(0,15)]
     available_letters = process_word(sys.argv[1])
-    longest_match = 'a'
     for word in word_list:
         if len(word) > 15:# or len(word) < len(longest_match):
             continue
@@ -37,12 +41,10 @@ def longest_words_for_given_letters(available_letters : list):
         if not letters_in_word:
             continue
         if is_subset(available_letters, letters_in_word):
-            longest_match = word
-            result.append(word)
-            if (len(word) == 15):
-                break # early exit because its not possible to find a longer match
+            index = len(word)-1
+            result[index] = more_common_word(result[index], word)
 
-    result.sort(key=lambda x: len(x))
+    result.reverse()
     return result
 
 for word in longest_words_for_given_letters(process_word(sys.argv[1])):
