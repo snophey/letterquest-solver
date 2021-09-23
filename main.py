@@ -1,6 +1,7 @@
 import nltk, sys
 from word_comparator import WordComparator
 from nltk.corpus import words
+from fastapi import FastAPI
 nltk.download('words')
 word_list = words.words()
 
@@ -39,8 +40,11 @@ def longest_words_for_given_letters(available_letters : list):
             result[index] = comparator.better_word(result[index], word)
 
     result.reverse()
-    return result
+    return [elem for elem in result if elem is not None]
 
-for word in longest_words_for_given_letters(process_word(sys.argv[1])):
-    if word:
-        print(word)
+
+app = FastAPI()
+
+@app.get("/lq/{alphabet}")
+async def root(alphabet : str):
+    return longest_words_for_given_letters(process_word(alphabet))
