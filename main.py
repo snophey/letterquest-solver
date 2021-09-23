@@ -25,22 +25,25 @@ def is_subset(superset, subset):
             return False
     return True
 
-result = []
 
-available_letters = process_word(sys.argv[1])
-longest_match = 'a'
-for word in word_list:
-    if len(word) > 15:# or len(word) < len(longest_match):
-        continue
-    letters_in_word = process_word(word)
-    if not letters_in_word:
-        continue
-    if is_subset(available_letters, letters_in_word):
-        longest_match = word
-        result.append(word)
-        if (len(word) == 15):
-            break # early exit because its not possible to find a longer match
+def longest_words_for_given_letters(available_letters : list):
+    result = []
+    available_letters = process_word(sys.argv[1])
+    longest_match = 'a'
+    for word in word_list:
+        if len(word) > 15:# or len(word) < len(longest_match):
+            continue
+        letters_in_word = process_word(word)
+        if not letters_in_word:
+            continue
+        if is_subset(available_letters, letters_in_word):
+            longest_match = word
+            result.append(word)
+            if (len(word) == 15):
+                break # early exit because its not possible to find a longer match
 
-result.sort(key=lambda x: len(x))
-for word in result:
+    result.sort(key=lambda x: len(x))
+    return result
+
+for word in longest_words_for_given_letters(process_word(sys.argv[1])):
     print(word)
