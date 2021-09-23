@@ -25,8 +25,8 @@ def is_subset(superset, subset):
             return False
     return True
 
-comparator = WordComparator()
 def longest_words_for_given_letters(available_letters : list):
+    comparator = WordComparator()
     result = [None for i in range(0,15)]
     for word in word_list:
         if len(word) > 15:
