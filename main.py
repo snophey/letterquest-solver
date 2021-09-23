@@ -33,9 +33,8 @@ def more_common_word(word1 : str, word2 : str):
 
 def longest_words_for_given_letters(available_letters : list):
     result = [None for i in range(0,15)]
-    available_letters = process_word(sys.argv[1])
     for word in word_list:
-        if len(word) > 15:# or len(word) < len(longest_match):
+        if len(word) > 15:
             continue
         letters_in_word = process_word(word)
         if not letters_in_word:
