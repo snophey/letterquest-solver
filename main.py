@@ -1,7 +1,7 @@
 import nltk, sys
-nltk.download('words')
-
+from word_comparator import WordComparator
 from nltk.corpus import words
+nltk.download('words')
 word_list = words.words()
 
 if len(sys.argv) != 2:
@@ -25,12 +25,7 @@ def is_subset(superset, subset):
             return False
     return True
 
-def more_common_word(word1 : str, word2 : str):
-    if word1 == None or word2 == None:
-        return word1 if word2 == None else word2
-    # TODO actual word frequency comparison
-    return max(word1, word2)
-
+comparator = WordComparator()
 def longest_words_for_given_letters(available_letters : list):
     result = [None for i in range(0,15)]
     for word in word_list:
@@ -41,10 +36,11 @@ def longest_words_for_given_letters(available_letters : list):
             continue
         if is_subset(available_letters, letters_in_word):
             index = len(word)-1
-            result[index] = more_common_word(result[index], word)
+            result[index] = comparator.compare(result[index], word)
 
     result.reverse()
     return result
 
 for word in longest_words_for_given_letters(process_word(sys.argv[1])):
-    print(word)
+    if word:
+        print(word)
