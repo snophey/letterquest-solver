@@ -20,9 +20,11 @@ class WordComparator:
     def better_word(self, word1 : str, word2 : str):
         if word1 == None or word2 == None:
             return word1 if word2 == None else word2
-        w1_norm = self.normalize_word(word1)
-        w2_norm = self.normalize_word(word2)
-        return word1 if self.word_counter[w1_norm] > self.word_counter[w2_norm]  else word2
+        return word1 if self.evaluate_word(word1) > self.evaluate_word(word2) else word2
+    
+    def evaluate_word(self, word):
+        w1_norm = self.normalize_word(word)
+        return self.word_counter[w1_norm]
     
     def word_frequencies(self):
         if exists(WordComparator.COUNTER_FILE_NAME):
